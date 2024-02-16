@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  backend:
+    container_name: backend
+    build:
+      context: backend
+      dockerfile: Dockerfile.backend
+    dns:
+      8.8.8.8
+    volumes:
+      - ./backend:/usr/app
+    ports:
+      - "8080:6000"
+    networks:
+      - globalnetwork
+
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile.frontend
+    volumes:
+      - ./frontend:/usr/app
+      - /usr/app/node_modules
+      - /usr/app/.next
+    ports:
+      - "3000:3000"
+    networks:
+      - globalnetwork
+
+networks:
+  globalnetwork:
+
+# volumes:
+#   db:
+#     external: true
